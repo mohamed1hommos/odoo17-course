@@ -1,0 +1,31 @@
+<!-- views/vendor_search_view.xml -->
+<odoo>
+<!--    <record id="view_vendor_custom_search" model="ir.ui.view">-->
+<!--        <field name="name">res.partner.vendor.custom.search</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        <field name="inherit_id" ref="base.view_res_partner_filter"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            &lt;!&ndash; إضافة filter جديد &ndash;&gt;-->
+<!--            <xpath expr="//filter[@name='supplier']" position="after">-->
+<!--                <filter-->
+<!--                    string="Has Orders"-->
+<!--                    name="has_orders"-->
+<!--                    domain="[('purchase_order_count', '>', 0)]"/>-->
+<!--                <filter-->
+<!--                    string="Active Vendors"-->
+<!--                    name="active_vendors"-->
+<!--                    domain="[('supplier_rank', '>=', 1)]"/>-->
+<!--            </xpath>-->
+
+<!--            &lt;!&ndash; إضافة Group By جديد &ndash;&gt;-->
+<!--            <xpath expr="//group" position="inside">-->
+<!--                <filter-->
+<!--                    string="Payment Terms"-->
+<!--                    name="group_payment_terms"-->
+<!--                    context="{'group_by': 'property_supplier_payment_term_id'}"/>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

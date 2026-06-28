@@ -1,0 +1,61 @@
+<odoo>
+
+    <!-- LIST VIEW -->
+    <record id="view_collection_report_list" model="ir.ui.view">
+        <field name="name">collection.report.list</field>
+        <field name="model">collection.report</field>
+        <field name="arch" type="xml">
+            <tree string="تقرير التحصيل" create="false" edit="false" delete="false">
+                <field name="salesperson_id" string="المندوب"/>
+                <field name="partner_id" string="العميل"/>
+                <field name="invoice_id" string="الفاتورة"/>
+                <field name="invoice_date" string="تاريخ الفاتورة"/>
+                <field name="payment_date" string="تاريخ الدفعة"/>
+                <field name="amount_total" string="إجمالي الفاتورة"/>
+                <field name="amount_collected" string="المحصّل" sum="إجمالي المحصّل"/>
+                <field name="amount_residual" string="المتبقي"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_collection_report_search" model="ir.ui.view">
+        <field name="name">collection.report.search</field>
+        <field name="model">collection.report</field>
+        <field name="arch" type="xml">
+            <search string="بحث">
+                <field name="salesperson_id" string="المندوب"/>
+                <field name="partner_id" string="العميل"/>
+                <field name="invoice_id" string="الفاتورة"/>
+                <filter name="filter_date" string="تاريخ الدفعة" date="payment_date"/>
+                <group expand="1" string="تجميع حسب">
+                    <filter name="group_salesperson"
+                        string="المندوب"
+                        context="{'group_by': 'salesperson_id'}"/>
+                    <filter name="group_partner"
+                        string="العميل"
+                        context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_collection_report" model="ir.actions.act_window">
+        <field name="name">تقرير التحصيل</field>
+        <field name="res_model">collection.report</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_collection_root"
+        name="التحصيل"
+        sequence="20"/>
+
+    <menuitem id="menu_collection_report"
+        name="تقرير التحصيل"
+        parent="menu_collection_root"
+        action="action_collection_report"
+        sequence="1"/>
+
+</odoo>

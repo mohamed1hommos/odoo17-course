@@ -1,0 +1,106 @@
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">view order form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="property_id" readonly="state in ['sale','done'] "/>
+            </xpath>
+<!--            <field name="partner_id" position="after">-->
+<!--                <field name ="property_id"/>-->
+<!--            </field>-->
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name ="owner_id" readonly="state in ['sale','done']"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="after">
+            <field name="cost_price" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="after">
+            <field name="purchase_price" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='cost_price']" position="after">
+            <field name="barcode" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='tax_totals']" position="after">
+
+                <group>
+                    <field name="margin_amount" readonly="1"/>
+                </group>
+
+            </xpath>
+            <xpath expr="//form/sheet//field" position="attributes">
+                <attribute name="readonly">state in ['sale', 'done', 'cancel']</attribute>
+            </xpath>
+<!--            <xpath expr="//field[@name='owner_id']" position="attributes">-->
+<!--                <attribute name="readonly">state in ['sale','done']</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='property_id']" position="attributes">-->
+<!--                <attribute name="readonly">state in ['sale','done']</attribute>-->
+<!--            </xpath>-->
+
+            <!-- 2. قفل جدول المنتجات (Order Lines) بالكامل ومنع الإضافة أو الحذف أو التعديل -->
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly">state in ['sale', 'done', 'cancel']</attribute>
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="readonly">state in ['sale', 'done', 'cancel']</attribute>
+<!--                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>-->
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="readonly">state in ['sale', 'done', 'cancel']</attribute>
+<!--                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>-->
+            </xpath>
+            <!-- 3. قفل شجرة المنتجات داخلياً للتأكيد (في حال تخطى الـ readonly الأب) -->
+            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                <attribute name="edit">state not in ['sale', 'done', 'cancel']</attribute>
+                <attribute name="create">state not in ['sale', 'done', 'cancel']</attribute>
+                <attribute name="delete">state not in ['sale', 'done', 'cancel']</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible" >state in ['sale','done']</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                <attribute name="invisible">state in ['sale','done']</attribute>
+            </xpath>
+
+
+<!--             <xpath expr="//field[@name='amount_total']" position="after">-->
+<!--                <div class="oe_subtotal_footer_separator"/>-->
+<!--                <div style="display:flex; justify-content:space-between; padding-top:4px; font-weight:bold; color:green;">-->
+<!--                  <span>Margin</span>-->
+<!--                  <span>-->
+<!--                    <field name="margin" widget="monetary" nolabel="1"/>-->
+<!--                    &amp;nbsp;(-->
+<!--                    <field name="margin_percent" widget="percentage" nolabel="1"/>-->
+<!--                    )-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--            </xpath>-->
+
+
+
+
+        </field>
+    </record>
+    <data>
+        <!-- 1. Define the Action (what opens when clicked) -->
+        <record id="action_my_report" model="ir.actions.client">
+            <field name="name">My Custom Report</field>
+            <field name="tag">app_one.action_saleOrdr_owl</field>
+        </record>
+
+        <!-- 2. Add item under Sale > Reporting -->
+        <menuitem
+            id="menu_my_custom_report"
+            name="My Custom Report"
+            parent="sale.menu_sale_report"
+            action="action_my_report"
+            sequence="20"/>
+
+    </data>
+
+</odoo>
+

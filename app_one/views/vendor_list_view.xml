@@ -1,0 +1,26 @@
+<!-- views/vendor_list_view.xml -->
+<odoo>
+<!--    <record id="view_vendor_custom_list" model="ir.ui.view">-->
+<!--        <field name="name">res.partner.vendor.custom.list</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        &lt;!&ndash; ورث من الـ list view الأصلي &ndash;&gt;-->
+<!--        <field name="inherit_id" ref="account.view_partner_supplier_list"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            &lt;!&ndash; إضافة field بعد field موجود &ndash;&gt;-->
+<!--            <xpath expr="//field[@name='email']" position="after">-->
+<!--                <field name="mobile"/>-->
+<!--                <field name="website"/>-->
+<!--            </xpath>-->
+
+<!--            &lt;!&ndash; حذف field &ndash;&gt;-->
+<!--            <xpath expr="//field[@name='phone']" position="replace"/>-->
+
+<!--            &lt;!&ndash; تعديل field موجود &ndash;&gt;-->
+<!--            <xpath expr="//field[@name='name']" position="attributes">-->
+<!--                <attribute name="string">Vendor Name</attribute>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

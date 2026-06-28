@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <template id="report_sales_order_tempelate">
+            <t t-call ="web.html_container">
+                <t t-call="web.external_layout">
+                        <div class="page">
+                            <br />
+                            <h2>Sales Order Report </h2>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Date Order</th>
+                                        <th>Payment Term</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>cost price</th>
+                                        <th>purchase price</th>
+                                        <th>Total</th>
+                                        <th>Quotation State</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="docs" t-as="doc" >
+                                        <t t-foreach="doc.order_line" t-as="line">
+
+                                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                                <td><span t-esc="doc.partner_id.name"/> </td>
+                                                <td><span t-field="doc.date_order"/> </td>
+                                                <td><span t-field="doc.payment_term_id"/> </td>
+                                                <td><span t-field="line.product_id.name"/> </td>
+                                                <td><span t-field="line.product_uom_qty"/></td>
+                                                <td><span t-field="line.price_subtotal"/> </td>
+                                                <td><span t-field="line.cost_price"/> </td>
+                                                <td><span t-field="line.purchase_price"/> </td>
+                                                <td><span t-field="line.price_total"/> </td>
+                                                <td><span t-field="doc.state"/> </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                </t>
+            </t>
+
+        </template>
+</odoo>

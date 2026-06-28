@@ -1,0 +1,18 @@
+<!-- views/vendor_kanban_view.xml -->
+<odoo>
+<!--    <record id="view_vendor_custom_kanban" model="ir.ui.view">-->
+<!--        <field name="name">res.partner.vendor.custom.kanban</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        <field name="inherit_id" ref="base.res_partner_kanban_view"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            &lt;!&ndash; إضافة field في الـ kanban card &ndash;&gt;-->
+<!--            <xpath expr="//div[@name='partner_details']" position="inside">-->
+<!--                <div>-->
+<!--                    <field name="mobile"/>-->
+<!--                </div>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

@@ -1,0 +1,8 @@
+@font-face {
+font-family:"PlaywriteDESAS";
+src: url(/app_one/static/src/fonts/PlaywriteDESAS-Light.ttf);
+}
+@font-face {
+font-family:"PlaywriteDESAS-Thin";
+src: url(/app_one/static/src/fonts/PlaywriteDESAS-Thin.ttf);
+}   

@@ -1,0 +1,74 @@
+
+<odoo>
+    <record id="vendor_view_edit_vat" model="ir.ui.view">
+        <field name="name">vat edit </field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='vat']" position="attributes">
+            <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='mobile']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name = 'email']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name ='phone']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                   <field name="free" string="Free"  required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                   <field name="x_priority" string="x_priority"/>
+            </xpath>
+            <xpath expr="//field[@name='x_priority']" position="after">
+                   <field name="wadge" string="wadge"/>
+            </xpath>
+            <xpath expr="//field[@name='wadge']" position="after">
+                   <field name="Days" string="Days"/>
+            </xpath>
+            <xpath expr="//field[@name='Days']" position="after">
+                   <field name="Salary" string="Salary"/>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="action_vendor_custom" model="ir.actions.act_window">
+        <field name="name">Vendors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('supplier_rank', '>', 0)]</field>
+        <field name="context">{
+            'search_default_supplier': 1,
+            'res_partner_search_mode': 'supplier',
+            'default_is_company': True,
+            'default_supplier_rank': 1
+        }</field>
+        <!-- ربط الـ views المعدلة صراحةً -->
+<!--        <field name="view_ids" eval="[-->
+<!--            (5, 0, 0),-->
+<!--            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_vendor_custom_kanban')}),-->
+<!--            (0, 0, {'view_mode': 'tree',   'view_id': ref('view_vendor_custom_list')}),-->
+<!--            (0, 0, {'view_mode': 'form',   'view_id': ref('view_vendor_custom_form')}),-->
+<!--        ]"/>-->
+<!--        <field name="search_view_id" ref="view_vendor_custom_search"/>-->
+    </record>
+
+    <!-- App Root Menu -->
+    <menuitem
+        id="menu_vendor_app_root"
+        name="Vendors"
+        sequence="100"/>
+
+    <!-- Sub Menu -->
+    <menuitem
+        id="menu_vendor_app_vendors"
+        name="Vendors"
+        parent="menu_vendor_app_root"
+        action="action_vendor_custom"
+        sequence="1"/>
+</odoo>

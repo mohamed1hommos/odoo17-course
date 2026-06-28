@@ -1,0 +1,103 @@
+/* ========== APP ONE LIST VIEW ========== */
+
+.app_one_list_view {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ========== TABLE ========== */
+
+.app_one_list_view table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ========== HEADER ========== */
+
+.app_one_list_view thead {
+    background-color: #017e84;
+    color: #ffffff;
+}
+
+.app_one_list_view thead tr {
+    border-bottom: 3px solid #015f63;
+}
+
+.app_one_list_view thead th {
+    padding: 14px 20px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
+}
+
+.app_one_list_view thead th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+.app_one_list_view thead th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+/* ========== BODY ========== */
+
+.app_one_list_view tbody {
+    background-color: #ffffff;
+}
+
+.app_one_list_view tbody tr {
+    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.2s ease;
+}
+
+.app_one_list_view tbody tr:nth-child(even) {
+    background-color: #f2fafa;
+}
+
+.app_one_list_view tbody tr:hover {
+    background-color: #e0f4f5;
+    cursor: pointer;
+}
+
+.app_one_list_view tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* ========== CELLS ========== */
+
+.app_one_list_view tbody td {
+    padding: 12px 20px;
+    color: #343a40;
+    font-size: 14px;
+    vertical-align: middle;
+    border-right: 1px solid #f1f3f5;
+}
+
+.app_one_list_view tbody td:last-child {
+    border-right: none;
+}
+
+/* ========== COLUMN STYLES ========== */
+
+.app_one_list_view tbody td:first-child {
+    font-weight: 600;
+    color: #017e84;
+}
+
+.app_one_list_view tbody td:nth-child(2) {
+    font-family: 'Courier New', monospace;
+    color: #495057;
+    letter-spacing: 0.5px;
+}
+
+.app_one_list_view tbody td:nth-child(3) {
+    color: #6c757d;
+    font-style: italic;
+}

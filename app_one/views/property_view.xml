@@ -1,0 +1,218 @@
+<odoo>
+    <!-- Action -->
+    <record id="properties_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="property_action_server_hold_status" model="ir.actions.server">
+        <field name="name">hold</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_hold()
+        </field>
+    </record>
+        <record id="property_state_action_server" model="ir.actions.server">
+        <field name="name">Change State</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_open_change_state_wizard()
+        </field>
+    </record>
+    <record id="check_selling_date_cron" model="ir.cron">
+        <field name="name">property: Check selling date</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">model.check_expected_selling_date()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+     Tree View
+    <record id="property_view_tree" model="ir.ui.view">
+        <field name="name">property.tree</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="(is_late)" multi_edit="1" create="1" edit="1" delete="1" class="header_custom">
+                <header>
+                    <button name ="property_xlsx_report" type="object" string="print_Excel_report" class="btn-primary"/>
+                </header>
+                <field name="name"/>
+                <field name="owner_id"/>
+                <field name="owner_address"/>
+                <field name="owner_phone"/>
+                <field name="state"/>
+                <field name="creator_id"/>
+                <field name="postcode"/>
+                <field name="is_late" invisible="1"/>
+                <field name="date_of_birth"/>
+                <field name="selling_price"/>
+                <field name="bedrooms" optional = "1"/>
+                <field name="bathrooms"/>
+                <field name="living_rooms"/>
+                <field name="gareden_orientation"/>
+                <field name="garden_area"/>
+                <field name="garage"/>
+                <field name="garafe"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="property_view_form" model="ir.ui.view">
+        <field name="name">property.form</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form multi_edit="1" create="1" edit="1" delete="1">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button
+                                name="action_open_related_owner"
+                                type="object" icon="fa-user" string="Owner"
+                                invisible="not owner_id"
+                        />
+
+                    </div>
+                    <widget name="web_ribbon" title="Soldout" bg_color="text-bg-danger" invisible="state !='draft'" />
+
+                    <header>
+                        <button name="action_draft" type="object" class="btn_primary" string="Set To Draft"
+                                 invisible="state in ('draft','cancel')"/>
+                        <button name="action" type="object" class="btn_primary" string="action"/>
+                        <button name="get_properties_api" type="object" class="btn_primary" string="get properties"/>
+
+                        <button name="action_pending" type="object" class="btn_secondary" string="Confirmed"
+                                invisible="state != 'draft'"/>
+                        <button name="action_cancel" type="object" class="btn_cancel" string="Cancel"
+                                invisible="state == 'cancel'"/>
+                        <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
+                    </header>
+                     <div class ="oe_title">
+                        <label for="ref"/>
+                            <h1>
+                                <field name="ref" />
+                            </h1>
+                    </div>
+                    <div class ="oe_title">
+                        <label for="name"/>
+                            <h1>
+                                <field name="name" readonly="state == 'cancel'" />
+                            </h1>
+                    </div>
+                    <group col="4">
+                        <group string="General info" colspan="2">
+
+                            <field name="postcode"/>
+<!--                            <field name="owner_id" context="{'default_model':model,'default_type':type,'default_inherit_id':id,'default_mode':'extension', 'active_test': False}"/>-->
+                            <field name="owner_id"/>
+                            <field name="owner_address"/>
+                            <field name="owner_phone"/>
+                            <field name="date_of_birth" />
+                            <field name="company_id" />
+                            <field name="date_availability" />
+                            <field name="free" class="oe_edit_only oe_no_translation_content" groups="app_one.purchase_user_group"/>
+                            <field name = "expected_price" />
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="selling_price"/>
+                            <field name="internal_notes" class="oe_edit_only"/>
+                            <field name="expected_selling_date"/>
+                            <field name="is_late"/>
+                            <field name="diff"/>
+                            <field name="description" />
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="create_uid"/>
+
+
+                        </group>
+                        <group string="Additional info" colspan="1">
+                            <field name="bedrooms"/>
+                            <field name="bathrooms"/>
+                            <field name="garage"/>
+                            <field name="living_rooms"/>
+                            <field name="garafe"/>
+                            <field name="gareden_orientation"/>
+                            <field name="garden_area"/>
+                        </group>
+                    </group>
+                    <group string="Contaxt info" colspan="1" groups="app_one.purchase_user_group">
+                        <field name="phone"/>
+                        <field name="Address"/>
+                        <field name="NickName"/>
+
+                    </group>
+                    <notebook>
+                        <page string="Bedrooms">
+                            <field name="line_ids">
+                                <tree editable="button">
+                                <field name="description"/>
+                                <field name="area"/>
+                                <field name="info"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="living_rooms">
+                            <field name="line_ids">
+                                <tree editable="button">
+                                <field name="description"/>
+                                <field name="area"/>
+                                <field name="info"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="living_rooms">
+                            <field name="line_ids">
+                                <tree editable="button">
+                                <field name="information"/>
+                                <field name="room"/>
+                                <field name="station"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="property_view_search" model="ir.ui.view">
+        <field name="name">property.search</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="postcode"/>
+                <field name="name"/>
+                <filter name="is_garage" string="is garage" domain="[('garage','=','true')]"/>
+                <filter name="group_garden" string="Garden" context="{'Group_by':'garade'}"/>
+            </search>
+        </field>
+    </record>
+    <menuitem
+        id="property_menu_item"
+        name="Properties"
+        parent="properties_menu"
+        action="properties_action"
+        sequence="1"
+    />
+    <record id="list_view_action" model="ir.actions.client">
+        <field name="name">Properties List View</field>
+        <field name="tag">app_one.action_list_view</field>
+    </record>
+    <menuitem
+        id="property_list_view_menu_item"
+        name="Properties OWL"
+        parent="properties_menu"
+        action="list_view_action"
+        sequence="3"
+    />
+</odoo>
+

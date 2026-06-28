@@ -1,0 +1,111 @@
+<odoo>
+    <!-- FORM VIEW -->
+    <record id="view_stages_form" model="ir.ui.view">
+        <field name="name">project.stages.form</field>
+        <field name="model">project.stages</field>
+        <field name="arch" type="xml">
+            <form string="Stages">
+                <header>
+                    <statusbar field="state"
+                        statusbar_visible="new,in_progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="priority" widget="priority"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- KANBAN VIEW -->
+    <!-- KANBAN VIEW -->
+    <record id="view_stages_kanban" model="ir.ui.view">
+        <field name="name">project.stages.kanban</field>
+        <field name="model">project.stages</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <templates>
+                    <!-- ✅ Changed from kanban-card to kanban-box -->
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                           <!-- ✅ Name -->
+                            <div class="mb-1">
+                                <strong>Name:</strong>
+                                <div class="text-muted">
+                                    <field name="name"/>
+                                </div>
+                            </div>
+                            <!-- ✅ Description -->
+                            <div class="mb-1">
+                                <strong>Description:</strong>
+                                <div class="text-muted">
+                                    <field name="description"/>
+                                </div>
+                            </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="badge"
+                                            decoration-success="state == 'done'"
+                                            decoration-warning="state == 'in_progress'"
+                                            decoration-info="state == 'new'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_stages" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">project.stages</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+     <record id="action_stages_config" model="ir.actions.act_window">
+        <field name="name">Stages Configuration</field>
+        <field name="res_model">project.stages</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_stages_config" model="ir.actions.act_window">
+        <field name="name">Stages Configuration</field>
+        <field name="res_model">project.stages</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_stages_root"
+        name="Stages"
+        sequence="10"/>
+
+    <menuitem id="menu_stages"
+        name="Stages"
+        parent="menu_stages_root"
+        action="action_stages"
+        sequence="1"/>
+    <menuitem id="menu_stages_config_root"
+        name="Configuration"
+        parent="menu_stages_root"
+        sequence="99"/>
+
+    <menuitem id="menu_stages_config"
+        name="Stages"
+        parent="menu_stages_config_root"
+        action="action_stages_config"
+        sequence="1"/>
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_users_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group>
+                    <field name="x_warehouse_id"/>
+                </group>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group>
+                    <field name="warehouse_ids_custom" widget="many2many_tags"/>
+                </group>
+                <group>
+                    <field name="allow_partner_tag_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

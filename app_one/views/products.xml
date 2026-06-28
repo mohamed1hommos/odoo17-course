@@ -1,0 +1,13 @@
+<odoo>
+    <menuitem
+        id="menu_products_app_root"
+        name="products"
+        sequence="101"/>
+
+    <menuitem
+        id="products_menu_app"
+        name="product"
+        parent="menu_products_app_root"
+        action="stock.product_template_action_product"
+        sequence="1"/>
+</odoo>

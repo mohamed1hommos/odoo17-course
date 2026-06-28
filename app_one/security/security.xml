@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- ==================== Categories ==================== -->
+
+
+        <record id="warehouse_company" model="ir.module.category">
+            <field name="name">Warehouse Company</field>
+        </record>
+
+        <record id="purchase_group" model="ir.module.category">
+            <field name="name">Pur</field>
+        </record>
+
+        <record id="inventory_group" model="ir.module.category">
+            <field name="name">Warehouse Custom</field>
+        </record>
+        <record id="sales_group" model="ir.module.category">
+            <field name="name">Sales Custom</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ==================== Sales Groups ==================== -->
+        <record id="group_sales_local_user" model="res.groups">
+            <field name="name">Sales local</field>
+            <field name="category_id" ref="sales_group"/>
+        </record>
+        <record id="group_sales_global_user" model="res.groups">
+            <field name="name">Sales Global</field>
+            <field name="category_id" ref="sales_group"/>
+        </record>
+
+        <!-- ==================== Inventory Groups ==================== -->
+        <record id="group_inventory_custom_user" model="res.groups">
+            <field name="name">Custom User</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+        </record>
+
+<!--        <record id="group_inventory_custom_user_inpreferance" model="res.groups">-->
+<!--            <field name="name">Custom User Preference</field>-->
+<!--        </record>-->
+
+        <record id="group_inventory_custom_manager" model="res.groups">
+            <field name="name">Custom Manager</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('group_inventory_custom_user'))]"/>
+        </record>
+
+        <!-- ==================== Real Estate Groups ==================== -->
+        <record id="property_group" model="ir.module.category">
+            <field name="name">Real Estate</field>
+        </record>
+        <record id="property_user_group" model="res.groups">
+            <field name="name">Property User</field>
+            <field name="category_id" ref="app_one.property_group"/>
+        </record>
+        <!-- ==================== Inventory Groups ==================== -->
+
+        <record id="test_property" model="ir.module.category">
+            <field name="name">Test Property</field>
+        </record>
+        <record id="test_user_group" model="res.groups">
+            <field name="name">TEST GROUP</field>
+            <field name="category_id" ref="app_one.test_property"/>
+        </record>
+
+        <!-- ==================== Warehouse Company Groups ==================== -->
+        <record id="warehouse_company_user_group" model="res.groups">
+            <field name="name">Warehouse Company User</field>
+            <field name="category_id" ref="app_one.warehouse_company"/>
+        </record>
+
+        <!-- ==================== Purchase Groups ==================== -->
+        <record id="purchase_user_group" model="res.groups">
+            <field name="name">Purchase User</field>
+            <field name="category_id" ref="app_one.purchase_group"/>
+        </record>
+
+        <record id="purchase_admin_group" model="res.groups">
+            <field name="name">Purchase Admin</field>
+            <field name="category_id" ref="app_one.purchase_group"/>
+        </record>
+
+        <!-- ==================== Warehouse Custom Groups ==================== -->
+        <record id="inventory_user_group" model="res.groups">
+            <field name="name">Inventory User</field>
+            <field name="category_id" ref="app_one.inventory_group"/>
+        </record>
+
+        <record id="inventory_admin_group" model="res.groups">
+            <field name="name">Inventory Admin</field>
+            <field name="category_id" ref="app_one.inventory_group"/>
+        </record>
+
+    </data>
+
+    <!-- ==================== Record Rules ==================== -->
+<!--    <data noupdate="1">-->
+
+<!--        &lt;!&ndash; Property: كل يوزر يشوف records اللي عمله بس &ndash;&gt;-->
+<!--        <record id="access_record_users" model="ir.rule">-->
+<!--            <field name="name">Access User Record</field>-->
+<!--            <field name="model_id" ref="app_one.model_property"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('create_uid', '=', user.id)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Purchase: كل يوزر يشوف orders اللي عمله بس &ndash;&gt;-->
+<!--        <record id="purchase_orders_creatorss_rule" model="ir.rule">-->
+<!--            <field name="name">Purchase User Own Records</field>-->
+<!--            <field name="model_id" ref="purchase.model_purchase_order"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('create_uid', '=', user.id)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Warehouse: كل يوزر يشوف الـ warehouse اللي assigned له بس &ndash;&gt;-->
+<!--        <record id="warehouse_user_rule" model="ir.rule">-->
+<!--            <field name="name">User Warehouse Access</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_warehouse"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('id', 'in', user.allowed_warehouse_ids.ids)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Locations: كل يوزر يشوف locations الـ warehouse بتاعه بس &ndash;&gt;-->
+<!--        <record id="location_user_rule" model="ir.rule">-->
+<!--            <field name="name">User Location Access</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_location"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('warehouse_id', 'in', user.allowed_warehouse_ids.ids)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Pickings: كل يوزر يشوف عمليات الـ warehouse بتاعه بس &ndash;&gt;-->
+<!--        <record id="picking_user_rule" model="ir.rule">-->
+<!--            <field name="name">User Picking Access</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_picking"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('picking_type_id.warehouse_id', 'in', user.x_warehouse_id.ids)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Quants: كل يوزر يشوف أرصدة الـ warehouse بتاعه بس &ndash;&gt;-->
+<!--        <record id="quant_user_rule" model="ir.rule">-->
+<!--            <field name="name">User Quant Access</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_quant"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('location_id.warehouse_id', 'in', user.x_warehouse_id.ids)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Stock Moves: كل يوزر يشوف moves الـ warehouse بتاعه بس &ndash;&gt;-->
+<!--        <record id="move_user_rule" model="ir.rule">-->
+<!--            <field name="name">User Stock Move Access</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_move"/>-->
+<!--            <field name="domain_force"><![CDATA[-->
+<!--                [('picking_type_id.warehouse_id', 'in', user.x_warehouse_id.ids)]-->
+<!--            ]]></field>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>-->
+<!--        </record>-->
+
+<!--    </data>-->
+    <record id="base.menu_administration" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]" />
+    </record>
+    <record id="rule_stock_warehouse_user_access" model="ir.rule">
+        <field name="name">Warehouse Access</field>
+        <field name="model_id" ref="stock.model_stock_warehouse"/>
+        <field name="domain_force">
+            [('id', 'in', user.warehouse_ids_custom.ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('app_one.test_user_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+    <record id="rule_stock_location_user_access" model="ir.rule">
+        <field name="name">Location Access</field>
+        <field name="model_id" ref="stock.model_stock_location"/>
+        <field name="domain_force">
+            [('warehouse_id', 'in', user.warehouse_ids_custom.ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('app_one.test_user_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+    <record id="rule_stock_picking_user_access" model="ir.rule">
+        <field name="name">Picking Access</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="domain_force">
+            [('picking_type_id.warehouse_id', 'in', user.warehouse_ids_custom.ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('app_one.test_user_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+
+    </record>
+    <record id="rule_stock_move_user_access" model="ir.rule">
+        <field name="name">Move Access</field>
+        <field name="model_id" ref="stock.model_stock_move"/>
+        <field name="domain_force">
+            [('picking_type_id.warehouse_id', 'in', user.warehouse_ids_custom.ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('app_one.test_user_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+    <record id="rule_stock_picking_type_user_access" model="ir.rule">
+        <field name="name">Operation Types Access</field>
+        <field name="model_id" ref="stock.model_stock_picking_type"/>
+        <field name="domain_force">
+            ['|', ('warehouse_id', 'in', user.warehouse_ids_custom.ids), ('warehouse_id', '=', False)]
+        </field>
+        <field name="groups" eval="[(4, ref('app_one.test_user_group'))]"/>
+        <field name="perm_read" eval="True"/> <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="group_customer_restriction" model="res.groups">
+        <field name="name">Restricted Customer Access</field>
+    </record>
+    <record id="partner_customer_rule" model="ir.rule">
+        <field name="name">Customer Restriction</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="groups" eval="[(4, ref('app_one.group_sales_global_user'))]"/>
+        <field name="domain_force">[('category_id', 'in', user.allow_partner_tag_ids.ids)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+        <!-- ==================== New Rules  ==================== -->
+
+
+    <record model="ir.module.category" id="module_category_sales_customers">
+        <field name="name">Sales Customer</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="group_sales_inner_customer" model="res.groups">
+        <field name="name">Users Deal With Inner Customer</field>
+<!--        <field name="implied_ids" eval="[(4, 0, [ref('group_sales_outer_customer')])]"/>-->
+        <field name="category_id" ref="module_category_sales_customers"/>
+    </record>
+
+    <record id="group_sales_outer_customer" model="res.groups">
+        <field name="name">Users Deal With Outer Customer</field>
+<!--        <field name="implied_ids" eval="[(4, 0, [ref('group_sales_inner_customer')])]"/>-->
+        <field name="implied_ids" eval="[(4, ref('group_sales_inner_customer'))]"/>
+        <field name="category_id" ref="module_category_sales_customers"/>
+    </record>
+<!--    <record id="sale_order_rule_custom" model="ir.rule">-->
+<!--        <field name="name">Sales Customers View</field>-->
+<!--        <field name="model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="domain_force"></field>-->
+<!--        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>-->
+<!--        <field name="perm_unlink" eval="True"/>-->
+<!--        <field name="perm_write" eval="True"/>-->
+<!--        <field name="perm_read" eval="True"/>-->
+<!--        <field name="perm_create" eval="True"/>-->
+<!--    </record>-->
+    <record id="module_category_human_resources_employees_custom" model="ir.module.category">
+        <field name="name">HR category</field>
+    </record>
+    <record model="res.groups" id="hr_group_general">
+        <field name="category_id" ref="module_category_human_resources_employees_custom"/>
+        <field name="name">HR group apps</field>
+    </record>
+
+    <record id="purchasing_rule_see_their_only_record" model="ir.rule">
+        <field name="name">See their only record (Global)</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="domain_force">[('user_id', '!=', False), ('user_id', '=', user.id)]</field>
+<!--        <field name="groups" eval="[(4, ref('app_one.purchase_user_group'))]"/>-->
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+    <record id="property_real_thier_own_record" model="ir.rule">
+        <field name="name">read property</field>
+        <field name="model_id" ref="app_one.model_property"/>
+        <field name="domain_force">[('creator_id', '!=', False), ('creator_id', '=', user.id)]</field>
+<!--        <field name="groups" eval="[(4, ref('app_one.purchase_user_group'))]"/>-->
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

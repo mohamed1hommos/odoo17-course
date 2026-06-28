@@ -1,0 +1,86 @@
+<odoo>
+
+    <template id="property_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <h1 style="font-family: 'PlaywriteDESAS'">
+                        Property one
+                    </h1>
+                    <style>
+                        table {
+                            width:100%;
+                            border:1px solid #b3adad;
+                            border-collapse:collapse;
+                            padding:5px;
+                        }
+                        table th {
+                            border:1px solid #b3adad;
+                            padding:5px;
+                            background:#f0f0f0;
+                            color:#313030;
+                            text-align:center;
+                        }
+                        table td {
+                            font-weight: bold;
+                            border:1px solid #b3adad;
+                            padding:5px;
+                            background:#ffffff;
+                            color:#313030;
+                            text-align:center;
+                        }
+                    </style>
+                    <table>
+                        <thead style="font-family : 'PlaywriteDESAS-Thin'">
+                            <th colspan="4">General Information</th>
+                        </thead>
+                        <tbody style="font-family : 'PlaywriteDESAS-Thin'">
+                            <td>name</td>
+                            <td><t t-esc="o.name"/></td>
+                            <td>postcode</td>
+                            <td><t t-esc="o.postcode"/></td>
+                        </tbody>
+                        <thead>
+                            <th colspan="4">additional Information</th>
+                        </thead>
+                        <tbody >
+                            <td>owner</td>
+                            <td><span t-field="o.owner_id"/></td>
+                            <td>phone</td>
+                            <td><t t-esc="o.owner_phone"/></td>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table>
+                        <thead>
+                            <th>Description</th>
+                            <th>Area(m2)</th>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.line_ids" t-as="line">
+                                <tr>
+                                    <td>
+                                        <t t-esc="line.description"/>
+                                    </td>
+                                     <td>
+                                        <t t-esc="line.area"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+       <record id="property_report" model="ir.actions.report">
+        <field name="name">Property report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report_template</field>
+    </record>
+</odoo>
